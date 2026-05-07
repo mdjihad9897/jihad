@@ -27,7 +27,8 @@
         @keyframes pulseAnim { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         
         /* PDF Card Style */
-        .pdf-card { background: linear-gradient(145deg, #121212, #000); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .pdf-card { background: linear-gradient(145deg, #1a1a1a, #0a0a0a); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; transition: 0.3s; }
+        .pdf-card:hover { border-color: #ef4444; transform: translateY(-3px); }
     </style>
 </head>
 <body class="pb-24">
@@ -39,8 +40,8 @@
                 <span class="text-lg font-brand font-black uppercase">UMMAH<span class="text-red-600">TUBE</span></span>
             </div>
             <div class="flex items-center gap-4 text-lg">
-                <!-- PDF Icon Added Here -->
-                <i onclick="toggleModal('pdfModal')" class="fas fa-file-pdf text-red-500 cursor-pointer hover:scale-110 transition"></i>
+                <i onclick="toggleModal('pdfLibraryModal')" class="fas fa-file-pdf text-red-500 cursor-pointer hover:scale-110 transition"></i>
+                
                 <i onclick="toggleModal('historyModal')" class="fas fa-info-circle text-lg text-gray-600"></i>
                 <i onclick="showFavorites()" class="fas fa-heart text-gray-400 text-sm cursor-pointer"></i>
                 <div id="userBtn" onclick="toggleModal('authModal')" class="w-7 h-7 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center cursor-pointer overflow-hidden">
@@ -49,27 +50,26 @@
             </div>
         </div>
 
-      <div class="flex items-center gap-2 mb-2 relative">
-    
-    <div class="relative transition-all duration-300 ease-in-out w-10 focus-within:w-full z-20">
-        <input id="globalSearch" onkeyup="searchVideos()" type="text" placeholder="সার্চ..." 
-            class="slim-input w-full bg-zinc-900 border border-white/5 pl-10 pr-4 rounded-xl outline-none focus:border-red-600 text-white text-[13px] placeholder:opacity-0 focus:placeholder:opacity-100 transition-all cursor-pointer focus:cursor-text">
-        <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-400 text-xs pointer-events-none"></i>
-    </div>
-    
-    <button id="voiceBtn" onclick="startVoiceSearch()" class="w-10 h-10 bg-zinc-900 border border-white/5 rounded-xl flex items-center justify-center shrink-0 z-10">
-        <i class="fas fa-microphone text-xs"></i>
-    </button>
+        <div class="flex items-center gap-2 mb-2 relative">
+            <div class="relative transition-all duration-300 ease-in-out w-10 focus-within:w-full z-20">
+                <input id="globalSearch" onkeyup="searchVideos()" type="text" placeholder="সার্চ..." 
+                    class="slim-input w-full bg-zinc-900 border border-white/5 pl-10 pr-4 rounded-xl outline-none focus:border-red-600 text-white text-[13px] placeholder:opacity-0 focus:placeholder:opacity-100 transition-all cursor-pointer focus:cursor-text">
+                <i class="fas fa-search absolute left-3.5 top-3.5 text-gray-400 text-xs pointer-events-none"></i>
+            </div>
+            
+            <button id="voiceBtn" onclick="startVoiceSearch()" class="w-10 h-10 bg-zinc-900 border border-white/5 rounded-xl flex items-center justify-center shrink-0 z-10">
+                <i class="fas fa-microphone text-xs"></i>
+            </button>
 
-    <div class="flex-1 h-10 relative group shrink-0">
-        <a id="adLink" href="#" target="_blank" class="block w-full h-full bg-zinc-900 rounded-xl overflow-hidden border border-white/10">
-            <img id="adDisplayImg" src="https://via.placeholder.com/800x200?text=Promote+Your+Brand" class="w-full h-full object-cover">
-        </a>
-        <button onclick="secureAdUpdate()" class="absolute -top-1 -right-1 bg-red-600 w-4 h-4 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <i class="fas fa-pen text-[7px]"></i>
-        </button>
-    </div>
-</div>
+            <div class="flex-1 h-10 relative group shrink-0">
+                <a id="adLink" href="#" target="_blank" class="block w-full h-full bg-zinc-900 rounded-xl overflow-hidden border border-white/10">
+                    <img id="adDisplayImg" src="https://via.placeholder.com/800x200?text=Promote+Your+Brand" class="w-full h-full object-cover">
+                </a>
+                <button onclick="secureAdUpdate()" class="absolute -top-1 -right-1 bg-red-600 w-4 h-4 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fas fa-pen text-[7px]"></i>
+                </button>
+            </div>
+        </div>
 
         <div class="flex gap-2 overflow-x-auto category-scroll pb-2">
             <button onclick="filterCat('All')" class="cat-chip bg-red-600 border-none font-bold">সবগুলো</button>
@@ -87,36 +87,33 @@
         <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
     </main>
 
-    <!-- PDF Modal Section -->
-    <div id="pdfModal" class="modal p-4">
+    <!-- PDF Library Modal -->
+    <div id="pdfLibraryModal" class="modal p-6">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-bold text-red-600 font-brand">PDF LIBRARY</h2>
-            <div class="flex gap-4 items-center">
-                <i onclick="toggleModal('pdfUploadModal')" class="fas fa-upload text-white cursor-pointer bg-zinc-800 p-2 rounded-lg"></i>
-                <i onclick="toggleModal('pdfModal')" class="fas fa-times text-xl p-2 cursor-pointer"></i>
+            <div class="flex gap-3 items-center">
+                <i onclick="toggleModal('pdfUploadModal')" class="fas fa-cloud-upload-alt text-xl text-white cursor-pointer"></i>
+                <i onclick="toggleModal('pdfLibraryModal')" class="fas fa-times text-xl p-2 cursor-pointer"></i>
             </div>
         </div>
-        <div id="pdfGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            <!-- PDFs will load here -->
+        <div id="pdfGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- PDFs will appear here -->
         </div>
     </div>
 
     <!-- PDF Upload Modal -->
     <div id="pdfUploadModal" class="modal items-center justify-center p-6">
-        <div class="bg-zinc-900 w-full max-w-sm rounded-2xl p-6 border border-white/10">
-            <h2 class="text-xl font-bold mb-4">পিডিএফ আপলোড করুন</h2>
+        <div class="bg-zinc-900 w-full max-w-sm rounded-2xl p-6 border border-white/10 relative">
+            <h2 class="text-xl font-bold mb-4">PDF আপলোড করুন</h2>
             <div class="space-y-3">
                 <input id="pdfName" type="text" placeholder="পিডিএফ এর নাম" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
-                <input id="pdfLink" type="text" placeholder="ডাউনলোড লিঙ্ক (Drive/Direct)" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
-                <input id="pdfPass" type="password" placeholder="আপলোড পাসওয়ার্ড" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
-                <button onclick="uploadPdf()" class="w-full bg-red-600 py-3 rounded-xl font-bold">আপলোড</button>
-                <button onclick="toggleModal('pdfUploadModal')" class="w-full bg-zinc-800 py-2 rounded-xl text-xs">বাতিল</button>
+                <input id="pdfUrl" type="text" placeholder="পিডিএফ ড্রাইভ/ডাউনলোড লিংক" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
+                <input id="pdfUploadPass" type="password" placeholder="আপলোড পাসওয়ার্ড দিন" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
+                <button onclick="uploadPDF()" class="w-full bg-red-600 py-3 rounded-xl font-bold">আপলোড</button>
+                <button onclick="toggleModal('pdfUploadModal')" class="w-full bg-zinc-800 py-3 rounded-xl">বাতিল</button>
             </div>
         </div>
     </div>
-
-    <!-- Auth, History, Download, Player Modals (Rest of your existing code) -->
-    <!-- ... [আমি কোডের বাকি অংশ ঠিক রেখেছি] ... -->
 
     <div id="authModal" class="modal justify-center items-center p-6">
         <div class="bg-zinc-900 w-full max-w-sm rounded-2xl p-6 border border-white/10 text-center">
@@ -145,58 +142,70 @@
     </div>
 
     <div id="historyModal" class="modal p-6">
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-bold text-red-600 font-brand">ABOUT US</h2>
-        <i onclick="toggleModal('historyModal')" class="fas fa-times text-xl p-2 cursor-pointer"></i>
-    </div>
-    <div class="space-y-4">
-        <div class="text-center pb-4 border-b border-white/10">
-            <div class="w-20 h-20 bg-red-600 rounded-full mx-auto flex items-center justify-center mb-3 shadow-lg shadow-red-600/20">
-                <i class="fas fa-play text-3xl text-white"></i>
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-red-600 font-brand">ABOUT US</h2>
+            <i onclick="toggleModal('historyModal')" class="fas fa-times text-xl p-2 cursor-pointer"></i>
+        </div>
+        <div class="space-y-4">
+            <div class="text-center pb-4 border-b border-white/10">
+                <div class="w-20 h-20 bg-red-600 rounded-full mx-auto flex items-center justify-center mb-3 shadow-lg shadow-red-600/20">
+                    <i class="fas fa-play text-3xl text-white"></i>
+                </div>
+                <h3 class="text-lg font-bold">UmmahTube </h3>
+                <p class="text-gray-400 text-xs">Version 2.0.1 (Master Edition)</p>
             </div>
-            <h3 class="text-lg font-bold">UmmahTube </h3>
-            <p class="text-gray-400 text-xs">Version 2.0.1 (Master Edition)</p>
+            <div class="grid grid-cols-1 gap-3">
+                <a href="https://www.facebook.com/md.jihad.hossan.732696" target="_blank" class="flex items-center gap-4 bg-zinc-900 p-4 rounded-2xl border border-white/5 hover:border-blue-500 transition">
+                    <i class="fab fa-facebook text-blue-500 text-xl"></i>
+                    <div>
+                        <p class="text-sm font-semibold">Facebook</p>
+                        <p class="text-[10px] text-gray-500">আমাদের সাথে যুক্ত হোন</p>
+                    </div>
+                </a>
+                <a href="https://wa.me/8801754467505" target="_blank" class="flex items-center gap-4 bg-zinc-900 p-4 rounded-2xl border border-white/5 hover:border-green-500 transition">
+                    <i class="fab fa-whatsapp text-green-500 text-xl"></i>
+                    <div>
+                        <p class="text-sm font-semibold">WhatsApp</p>
+                        <p class="text-[10px] text-gray-500">সরাসরি চ্যাট করুন</p>
+                    </div>
+                </a>
+                <a href="tel:+8801754467505" class="flex items-center gap-4 bg-zinc-900 p-4 rounded-2xl border border-white/5 hover:border-yellow-500 transition">
+                    <div class="flex gap-2">
+                        <i class="fas fa-comment text-blue-400 text-xl"></i>
+                        <i class="fas fa-phone text-yellow-500 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold">Imo & Phone</p>
+                        <p class="text-[10px] text-gray-500">+880 1754467505</p>
+                    </div>
+                </a>
+                <a href="mailto:jihadhossan122133@gmail.com" class="flex items-center gap-4 bg-zinc-900 p-4 rounded-2xl border border-white/5 hover:border-red-500 transition">
+                    <i class="fas fa-envelope text-red-500 text-xl"></i>
+                    <div>
+                        <p class="text-sm font-semibold">Email</p>
+                        <p class="text-[10px] text-gray-500">jihadhossan40000@gmail.com</p>
+                    </div>
+                </a>
+            </div>
+            <p class="text-[10px] text-center text-gray-600 mt-6">UmmahTube Inc. All Rights Reserved.</p>
         </div>
-        <div class="grid grid-cols-1 gap-3">
-            <a href="https://www.facebook.com/md.jihad.hossan.732696" target="_blank" class="flex items-center gap-4 bg-zinc-900 p-4 rounded-2xl border border-white/5 hover:border-blue-500 transition">
-                <i class="fab fa-facebook text-blue-500 text-xl"></i>
-                <div><p class="text-sm font-semibold">Facebook</p><p class="text-[10px] text-gray-500">আমাদের সাথে যুক্ত হোন</p></div>
-            </a>
-            <a href="https://wa.me/8801754467505" target="_blank" class="flex items-center gap-4 bg-zinc-900 p-4 rounded-2xl border border-white/5 hover:border-green-500 transition">
-                <i class="fab fa-whatsapp text-green-500 text-xl"></i>
-                <div><p class="text-sm font-semibold">WhatsApp</p><p class="text-[10px] text-gray-500">সরাসরি চ্যাট করুন</p></div>
-            </a>
-        </div>
-    </div>
     </div>
 
     <div id="downloadModal" class="modal items-center justify-center p-6">
-    <div class="bg-zinc-900 w-full max-w-sm rounded-3xl p-6 border border-white/10">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-sm font-bold text-red-600 uppercase">Direct Downloader</h2>
-            <i onclick="toggleModal('downloadModal')" class="fas fa-times text-gray-500 cursor-pointer p-2"></i>
+        <div class="bg-zinc-900 w-full max-w-sm rounded-3xl p-6 border border-white/10 shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-sm font-bold text-red-600 tracking-widest uppercase">Direct Downloader</h2>
+                <i onclick="toggleModal('downloadModal')" class="fas fa-times text-gray-500 cursor-pointer p-2"></i>
+            </div>
+            <div class="space-y-4">
+                <p class="text-[11px] text-gray-400">নিচে ভিডিওর লিঙ্ক দিন, আমরা আপনাকে সরাসরি ডাউনলোড পেজে নিয়ে যাবো:</p>
+                <input id="directDlInput" type="text" placeholder="ইউটিউব লিঙ্ক পেস্ট করুন..." 
+                    class="w-full bg-black border border-white/5 p-4 rounded-2xl text-xs outline-none focus:border-red-600 text-white">
+                <button onclick="redirectToDownload()" class="w-full bg-red-600 py-4 rounded-2xl font-bold text-sm shadow-lg shadow-red-600/20 active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-bolt"></i> সরাসরি ডাউনলোড করুন
+                </button>
+            </div>
         </div>
-        <div class="space-y-4">
-            <input id="directDlInput" type="text" placeholder="ইউটিউব লিঙ্ক..." class="w-full bg-black border border-white/5 p-4 rounded-2xl text-xs outline-none text-white">
-            <button onclick="redirectToDownload()" class="w-full bg-red-600 py-4 rounded-2xl font-bold flex items-center justify-center gap-2"><i class="fas fa-bolt"></i> ডাউনলোড করুন</button>
-        </div>
-    </div>
-    </div>
-
-    <div id="uploadModal" class="modal items-center justify-center p-6">
-    <div class="bg-zinc-900 w-full max-w-sm rounded-2xl p-6 border border-white/10 relative">
-        <button onclick="toggleModal('uploadModal')" class="absolute top-4 right-4 text-gray-500"><i class="fas fa-times text-lg"></i></button>
-        <h2 class="text-xl font-bold mb-4">ভিডিও আপলোড</h2>
-        <div class="space-y-3">
-            <input id="ytUrl" type="text" placeholder="YouTube লিঙ্ক" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
-            <input id="ytTitle" type="text" placeholder="শিরোনাম" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
-            <select id="ytCat" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5 text-gray-400">
-                <option value="নিউজ">নিউজ</option><option value="ওয়াজ ">ওয়াজ </option><option value="সুরা">সুরা</option><option value="অন্যান্য">অন্যান্য</option>
-            </select>
-            <input id="uploadPass" type="password" placeholder="আপলোড পাসওয়ার্ড" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
-            <button onclick="addVideo()" class="w-full bg-red-600 py-3 rounded-xl font-bold">পাবলিশ</button>
-        </div>
-    </div>
     </div>
 
     <div id="playerModal" class="modal">
@@ -209,22 +218,60 @@
             <div id="playerFrame" class="w-full aspect-video bg-zinc-900 flex items-center justify-center"></div>
             <div class="p-5 flex-1 bg-black overflow-y-auto">
                 <h2 id="playingTitle" class="text-lg font-bold mb-4 text-white"></h2>
+                <div class="flex flex-col gap-4">
+                    <button id="copyLinkBtn" class="w-max flex items-center gap-2 bg-zinc-900 border border-white/10 px-5 py-3 rounded-2xl active:scale-95 transition-all">
+                        <i class="fas fa-link text-red-600 text-xs"></i>
+                        <span id="btnText" class="text-xs font-semibold text-gray-300">Copy Video Link</span>
+                    </button>
+                    <p id="copyStatus" class="text-[10px] text-green-500 opacity-0 transition-opacity">লিঙ্ক কপি হয়েছে!</p>
+                    <div class="mt-4 w-full h-24 relative group">
+                        <a id="playerAdLink" href="#" target="_blank" class="block w-full h-full bg-zinc-900 rounded-xl overflow-hidden border border-white/10">
+                            <img id="playerAdImg" src="https://via.placeholder.com/800x200?text=Promote+Your+Brand" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="uploadModal" class="modal items-center justify-center p-6">
+        <div class="bg-zinc-900 w-full max-w-sm rounded-2xl p-6 border border-white/10 relative">
+            <button onclick="toggleModal('uploadModal')" class="absolute top-4 right-4 text-gray-500 hover:text-white">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <h2 class="text-xl font-bold mb-4">ভিডিও আপলোড</h2>
+            <div class="space-y-3">
+                <input id="ytUrl" type="text" placeholder="YouTube লিঙ্ক" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
+                <input id="ytTitle" type="text" placeholder="শিরোনাম" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
+                <select id="ytCat" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5 text-gray-400">
+                    <option value="নিউজ">নিউজ</option>
+                    <option value="ওয়াজ ">ওয়াজ </option>
+                    <option value="সুরা">সুরা</option>
+                    <option value="দুয়া ">দুয়া </option>
+                    <option value="লেকচার ">লেকচার </option>
+                    <option value="ইসলামের ইতিহাস">ইসলামের ইতিহাস</option>                                
+                    <option value="অন্যান্য">অন্যান্য</option>
+                </select>
+                <input id="uploadPass" type="password" placeholder="আপলোড পাসওয়ার্ড দিন" class="w-full bg-black p-3 rounded-xl outline-none border border-white/5">
+                <button onclick="addVideo()" class="w-full bg-red-600 py-3 rounded-xl font-bold transition active:scale-95">পাবলিশ</button>
+                <button onclick="toggleModal('uploadModal')" class="w-full bg-zinc-800 text-gray-300 py-3 rounded-xl font-semibold text-sm transition hover:bg-zinc-700">বাতিল করুন</button>
             </div>
         </div>
     </div>
 
     <div class="fixed bottom-0 w-full glass-nav flex justify-around py-4 border-t border-white/5">
         <i onclick="filterCat('All')" class="fas fa-home text-lg text-red-600"></i>
-        <i onclick="toggleModal('pdfModal')" class="fas fa-book text-lg text-gray-600"></i>
+        <i onclick="toggleModal('historyModal')" class="fas fa-info-circle text-lg text-gray-600"></i>
         <i onclick="toggleModal('uploadModal')" class="fas fa-plus-circle text-2xl text-white -mt-1"></i>
         <i id="adminLockBtn" onclick="adminLogin()" class="fas fa-key text-lg text-gray-600 cursor-pointer"></i>
-        <i onclick="toggleModal('downloadModal')" class="fas fa-arrow-circle-down text-2xl text-gray-600 cursor-pointer"></i>
+        <i onclick="toggleModal('downloadModal')" class="fas fa-arrow-circle-down text-2xl text-gray-600 cursor-pointer hover:text-red-600 transition-all"></i>
     </div>
 
     <script>
         const ADMIN_PASS = "@122133@";
         const UPLOAD_PASS = "@1436@";
         let isAdmin = false;
+        let currentUser = null;
 
         const firebaseConfig = {
             apiKey: "AIzaSyD7U3uradoCjSlFA5HwjMeVOfQSTPvLui0",
@@ -236,59 +283,149 @@
             appId: "1:206811154193:web:be885affab3c182a8d6eb0"
         };
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
         const auth = firebase.auth();
+        const db = firebase.database();
         const googleProvider = new firebase.auth.GoogleAuthProvider();
 
         let allVideos = [];
         let favorites = JSON.parse(localStorage.getItem('sx_fav_slim')) || [];
 
-        // PDF Section Functions
-        function uploadPdf() {
+        // PDF Functions
+        function uploadPDF() {
             const name = document.getElementById('pdfName').value;
-            const link = document.getElementById('pdfLink').value;
-            const pass = document.getElementById('pdfPass').value;
-
-            if (pass !== UPLOAD_PASS) {
-                alert("ভুল পাসওয়ার্ড!");
-                return;
-            }
-
-            if (name && link) {
-                db.ref('pdfs').push({ name, link }).then(() => {
-                    alert("পিডিএফ আপলোড সফল!");
-                    document.getElementById('pdfName').value = "";
-                    document.getElementById('pdfLink').value = "";
-                    document.getElementById('pdfPass').value = "";
+            const url = document.getElementById('pdfUrl').value;
+            const pass = document.getElementById('pdfUploadPass').value;
+            
+            if(pass !== UPLOAD_PASS) return alert("ভুল পাসওয়ার্ড!");
+            if(name && url) {
+                db.ref('pdfs').push({ name, url }).then(() => {
+                    alert("PDF সফলভাবে আপলোড হয়েছে!");
+                    document.getElementById('pdfName').value = '';
+                    document.getElementById('pdfUrl').value = '';
+                    document.getElementById('pdfUploadPass').value = '';
                     toggleModal('pdfUploadModal');
                 });
-            } else {
-                alert("সবগুলো তথ্য দিন");
-            }
+            } else { alert("সবগুলো ঘর পূরণ করুন!"); }
         }
 
-        function loadPdfs() {
-            db.ref('pdfs').on('value', snap => {
-                const data = snap.val();
-                const grid = document.getElementById('pdfGrid');
-                grid.innerHTML = '';
-                for (let key in data) {
-                    const p = data[key];
-                    grid.innerHTML += `
-                        <div class="pdf-card p-4 rounded-2xl flex flex-col items-center text-center gap-3">
-                            <i class="fas fa-file-pdf text-4xl text-red-600"></i>
-                            <h3 class="text-[11px] font-semibold line-clamp-2">${p.name}</h3>
-                            <a href="${p.link}" target="_blank" class="w-full bg-white text-black py-2 rounded-lg text-[10px] font-bold">ডাউনলোড</a>
-                            ${isAdmin ? `<button onclick="deletePdf('${key}')" class="text-red-500 text-[10px]">মুছুন</button>` : ''}
+        db.ref('pdfs').on('value', snap => {
+            const pdfGrid = document.getElementById('pdfGrid');
+            pdfGrid.innerHTML = '';
+            const data = snap.val();
+            for(let key in data) {
+                pdfGrid.innerHTML += `
+                    <div class="pdf-card p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-file-pdf text-2xl text-red-600"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-200">${data[key].name}</h4>
+                                <p class="text-[10px] text-gray-500">লিংক থেকে ডাউনলোড করুন</p>
+                            </div>
                         </div>
-                    `;
-                }
-            });
+                        <div class="flex gap-2">
+                            <a href="${data[key].url}" target="_blank" class="bg-red-600/10 text-red-500 p-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+                                <i class="fas fa-download text-xs"></i>
+                            </a>
+                            ${isAdmin ? `<i onclick="deletePDF('${key}')" class="fas fa-trash text-gray-600 p-2 cursor-pointer"></i>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+        });
+
+        function deletePDF(key) { if(confirm("পিডিএফটি ডিলিট করতে চান?")) db.ref('pdfs/' + key).remove(); }
+
+        // Existing Video functions
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            const fields = document.getElementById('authFields');
+            const info = document.getElementById('userInfo');
+            const userBtn = document.getElementById('userBtn');
+            if(user) {
+                fields.classList.add('hidden'); info.classList.remove('hidden');
+                document.getElementById('userNameDisplay').innerText = user.displayName || user.email;
+                document.getElementById('userImg').src = user.photoURL || 'https://ui-avatars.com/api/?name='+user.email;
+                userBtn.innerHTML = `<img src="${user.photoURL || 'https://ui-avatars.com/api/?name='+user.email}" class="w-full h-full">`;
+            } else {
+                fields.classList.remove('hidden'); info.classList.add('hidden');
+                userBtn.innerHTML = `<i class="fas fa-user text-[10px]"></i>`;
+            }
+        });
+
+        function togglePass() {
+            const p = document.getElementById('password');
+            const eye = document.getElementById('toggleEye');
+            if(p.type === 'password') { p.type = 'text'; eye.classList.replace('fa-eye-slash', 'fa-eye'); } 
+            else { p.type = 'password'; eye.classList.replace('fa-eye', 'fa-eye-slash'); }
         }
 
-        function deletePdf(key) { if(confirm("পিডিএফটি ডিলিট করবেন?")) db.ref('pdfs/' + key).remove(); }
+        async function googleLogin() { try { await auth.signInWithPopup(googleProvider); toggleModal('authModal'); } catch(e) { alert(e.message); } }
+        async function login() { 
+            const e = document.getElementById('email').value, p = document.getElementById('password').value; 
+            try { await auth.signInWithEmailAndPassword(e, p); toggleModal('authModal'); } catch(e) { alert("লগইন ভুল: " + e.message); } 
+        }
+        async function signup() { 
+            const e = document.getElementById('email').value, p = document.getElementById('password').value; 
+            try { await auth.createUserWithEmailAndPassword(e, p); alert("অ্যাকাউন্ট তৈরি হয়েছে!"); toggleModal('authModal'); } catch(e) { alert("ভুল: " + e.message); } 
+        }
+        function logout() { auth.signOut(); }
 
-        // Existing Core Functions
+        function adminLogin() {
+            const pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+            if(pass === ADMIN_PASS) {
+                isAdmin = true;
+                document.getElementById('adminLockBtn').style.color = "#ff0000";
+                renderVideos(allVideos);
+                // Trigger PDF refresh to show delete icons
+                db.ref('pdfs').once('value', snap => {
+                    const pdfGrid = document.getElementById('pdfGrid');
+                    pdfGrid.innerHTML = '';
+                    const data = snap.val();
+                    for(let key in data) {
+                        pdfGrid.innerHTML += `
+                            <div class="pdf-card p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-file-pdf text-2xl text-red-600"></i>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-gray-200">${data[key].name}</h4>
+                                        <p class="text-[10px] text-gray-500">লিংক থেকে ডাউনলোড করুন</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <a href="${data[key].url}" target="_blank" class="bg-red-600/10 text-red-500 p-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+                                        <i class="fas fa-download text-xs"></i>
+                                    </a>
+                                    ${isAdmin ? `<i onclick="deletePDF('${key}')" class="fas fa-trash text-gray-600 p-2 cursor-pointer"></i>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                alert("অ্যাডমিন মোড চালু!");
+            } else { alert("ভুল পাসওয়ার্ড!"); }
+        }
+
+        db.ref('activeAd').on('value', (snapshot) => {
+            const adData = snapshot.val();
+            if (adData) {
+                document.getElementById('adDisplayImg').src = adData.img;
+                document.getElementById('adLink').href = adData.link;
+                document.getElementById('playerAdImg').src = adData.img;
+                document.getElementById('playerAdLink').href = adData.link;
+            }
+        });
+
+        function secureAdUpdate() {
+            const pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+            if (pass === ADMIN_PASS) {
+                const newImg = prompt("নতুন ইমেজের লিঙ্ক দিন:", document.getElementById('adDisplayImg').src);
+                const newUrl = prompt("অ্যাডের URL লিঙ্ক দিন:", document.getElementById('adLink').href);
+                if (newImg && newUrl) {
+                    db.ref('activeAd').set({ img: newImg, link: newUrl }).then(() => alert("অ্যাড পরিবর্তন হয়েছে!"));
+                }
+            } else { alert("ভুল পাসওয়ার্ড!"); }
+        }
+
         function loadVideos() {
             db.ref('videos').on('value', snap => {
                 const data = snap.val(); allVideos = [];
@@ -317,11 +454,24 @@
 
         function playVideo(id, title) {
             const frameContainer = document.getElementById('playerFrame');
-            frameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" class="w-full h-full" frameborder="0" allowfullscreen></iframe>`;
+            frameContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
             document.getElementById('playingTitle').innerText = title;
+            const fullLink = `https://www.youtube.com/watch?v=${id}`;
+            const copyBtn = document.getElementById('copyLinkBtn');
+            const btnText = document.getElementById('btnText');
+            const status = document.getElementById('copyStatus');
+            copyBtn.onclick = function() {
+                const el = document.createElement('textarea');
+                el.value = fullLink; document.body.appendChild(el);
+                el.select(); document.execCommand('copy'); document.body.removeChild(el);
+                status.style.opacity = "1"; btnText.innerText = "Link Copied!";
+                setTimeout(() => { status.style.opacity = "0"; btnText.innerText = "Copy Video Link"; }, 2000);
+            };
             toggleModal('playerModal');
         }
 
+        function deleteVideo(key) { if(confirm("মুছে ফেলবেন?")) db.ref('videos/' + key).remove(); }
+        
         function addVideo() {
             const u = document.getElementById('ytUrl').value, t = document.getElementById('ytTitle').value, c = document.getElementById('ytCat').value, p = document.getElementById('uploadPass').value;
             if(p !== UPLOAD_PASS) return alert("ভুল পাসওয়ার্ড!");
@@ -333,34 +483,29 @@
             }
         }
 
-        function adminLogin() {
-            const pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
-            if(pass === ADMIN_PASS) {
-                isAdmin = true;
-                document.getElementById('adminLockBtn').style.color = "#ff0000";
-                renderVideos(allVideos);
-                loadPdfs(); // Refresh PDF view with admin rights
-                alert("অ্যাডমিন মোড চালু!");
-            } else { alert("ভুল পাসওয়ার্ড!"); }
+        function startVoiceSearch() {
+            const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            rec.lang = 'bn-BD'; rec.onstart = () => document.getElementById('voiceBtn').classList.add('pulse');
+            rec.onresult = (e) => { document.getElementById('globalSearch').value = e.results[0][0].transcript; searchVideos(); };
+            rec.onend = () => document.getElementById('voiceBtn').classList.remove('pulse'); rec.start();
         }
 
-        function toggleModal(id) { document.getElementById(id).classList.toggle('active-modal'); }
-        function closePlayer() { document.getElementById('playerFrame').innerHTML = ''; toggleModal('playerModal'); }
         function searchVideos() { const q = document.getElementById('globalSearch').value.toLowerCase(); renderVideos(allVideos.filter(v => v.title.toLowerCase().includes(q))); }
         function filterCat(cat) { if(cat === 'All') renderVideos(allVideos); else renderVideos(allVideos.filter(v => v.cat === cat)); }
-        
-        // Initialization
-        loadVideos();
-        loadPdfs();
+        function toggleFavorite(id) { const idx = favorites.indexOf(id); if(idx === -1) favorites.push(id); else favorites.splice(idx, 1); localStorage.setItem('sx_fav_slim', JSON.stringify(favorites)); renderVideos(allVideos); }
+        function showFavorites() { renderVideos(allVideos.filter(v => favorites.includes(v.id))); }
+        function toggleModal(id) { document.getElementById(id).classList.toggle('active-modal'); }
+        function closePlayer() { document.getElementById('playerFrame').innerHTML = ''; toggleModal('playerModal'); }
 
-        // Ad Syncing
-        db.ref('activeAd').on('value', (snapshot) => {
-            const adData = snapshot.val();
-            if (adData) {
-                document.getElementById('adDisplayImg').src = adData.img;
-                document.getElementById('adLink').href = adData.link;
-            }
-        });
+        function redirectToDownload() {
+            const videoUrl = document.getElementById('directDlInput').value.trim();
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = videoUrl.match(regExp);
+            const videoId = (match && match[2].length == 11) ? match[2] : null;
+            if(videoId) { window.open(`https://www.ssyoutube.com/watch?v=${videoId}`, '_blank'); toggleModal('downloadModal'); document.getElementById('directDlInput').value = ""; }
+        }
+
+        loadVideos();
     </script>
 </body>
 </html>
